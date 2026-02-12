@@ -1,0 +1,54 @@
+const noBtn = document.getElementById('noBtn');
+
+// Clever "Avoidance" logic
+noBtn.addEventListener('mouseover', () => {
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    
+    // Add a little rotation to make it look "panicked"
+    const rotate = Math.random() * 360;
+    
+    noBtn.style.position = 'fixed';
+    noBtn.style.left = x + 'px';
+    noBtn.style.top = y + 'px';
+    noBtn.style.transform = `rotate(${rotate}deg)`;
+});
+
+function celebrate() {
+    const status = document.getElementById('status');
+    const container = document.querySelector('.glass-container');
+    
+    status.innerHTML = "Processing Love... ❤️ Success!";
+    container.style.borderColor = "#ff4d6d";
+    
+    // Launch particles
+    for (let i = 0; i < 100; i++) {
+        createParticle();
+    }
+}
+
+function createParticle() {
+    const particle = document.createElement('div');
+    particle.innerHTML = '🌸'; // Mix of flowers and hearts
+    if(Math.random() > 0.5) particle.innerHTML = '❤️';
+    
+    particle.style.position = 'fixed';
+    particle.style.left = '50vw';
+    particle.style.top = '50vh';
+    particle.style.fontSize = Math.random() * 20 + 10 + 'px';
+    particle.style.zIndex = '100';
+    particle.style.transition = 'all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    
+    document.body.appendChild(particle);
+
+    // Random destination
+    const destinationX = (Math.random() - 0.5) * 2000;
+    const destinationY = (Math.random() - 0.5) * 2000;
+
+    setTimeout(() => {
+        particle.style.transform = `translate(${destinationX}px, ${destinationY}px) rotate(${Math.random() * 1000}deg)`;
+        particle.style.opacity = '0';
+    }, 50);
+
+    setTimeout(() => particle.remove(), 2000);
+}
